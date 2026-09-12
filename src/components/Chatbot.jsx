@@ -5,9 +5,9 @@ import { queryChatbot } from '../data/chatbotKnowledge';
 const suggestedQuestions = [
   "Who is Arshan?",
   "Tell me about his data experience",
+  "What are his key achievements?",
   "What are his main projects?",
   "Tell me about the UIDAI project",
-  "What technologies does he use?",
   "Tell me about Databricks project",
   "How can I contact Arshan?"
 ];

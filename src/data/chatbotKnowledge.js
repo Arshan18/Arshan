@@ -143,7 +143,18 @@ export function queryChatbot(userMessage, conversationHistory = []) {
       `4. **LangChain Multi-Agent Research System**: Autonomous research & synthesis agent with LangChain, LangGraph & Tavily.`;
   }
 
-  // 6. Skills & Tech Stack Queries
+  // 6. Achievements & Awards
+  if (q.includes("achievement") || q.includes("hacksagon") || q.includes("neoagri") || q.includes("award") || q.includes("finalist") || q.includes("prize")) {
+    return `🏆 **HACKSAGON 2026 — FINALIST**\n\n` +
+      `• **Project:** NeoAgri — Drone + Edge AI Agriculture Intelligence System\n` +
+      `• **Event:** National Level Hackathon in Gwalior, Madhya Pradesh\n` +
+      `• **Journey:** Problem → Idea → Build → Innovation → HACKSAGON → Finalist\n` +
+      `• **Key Innovation:** Offline-first crop disease detection with on-device TensorFlow Lite, drone AI, and Hindi voice interaction for rural farmers with limited connectivity.\n` +
+      `• **Tech Stack:** Python, React Native, Node.js, PostgreSQL, FastAPI, ONNX Runtime, TensorFlow Lite, SQLite.\n` +
+      `• [View Achievement Proof](https://drive.google.com/drive/folders/1sMEuZNtviFBPdnA_s0QG9ywP3IYnZPUh)`;
+  }
+
+  // 7. Skills & Tech Stack Queries
   if (q.includes("sql") || q.includes("database") || q.includes("query")) {
     return `Arshan has strong expertise in **Advanced SQL**, including CTEs (Common Table Expressions), Window Functions, Query Optimization, Data Cleaning & Validation, and Data Modeling.`;
   }

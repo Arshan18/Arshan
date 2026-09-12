@@ -3,10 +3,11 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Experience from './components/Experience';
-import Education from './components/Education';
-import Certifications from './components/Certifications';
 import SkillsMatrix from './components/SkillsMatrix';
 import ProjectsShowcase from './components/ProjectsShowcase';
+import Achievements from './components/Achievements';
+import Education from './components/Education';
+import Certifications from './components/Certifications';
 import FooterContact from './components/FooterContact';
 import Chatbot from './components/Chatbot';
 
@@ -30,17 +31,20 @@ function App() {
         {/* 5. Projects Showcase */}
         <ProjectsShowcase />
 
-        {/* 6. Education */}
+        {/* 6. Achievements & Recognition */}
+        <Achievements />
+
+        {/* 7. Education */}
         <Education />
 
-        {/* 7. Certifications & Credentials */}
+        {/* 8. Certifications & Credentials */}
         <Certifications />
       </main>
       
-      {/* 8. Contact & Footer */}
+      {/* 9. Contact & Footer */}
       <FooterContact />
 
-      {/* 9. Floating Arshan AI Assistant */}
+      {/* 10. Floating Arshan AI Assistant */}
       <Chatbot />
     </div>
   );
