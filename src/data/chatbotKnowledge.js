@@ -150,8 +150,8 @@ export function queryChatbot(userMessage, conversationHistory = []) {
       `• **Event:** National Level Hackathon in Gwalior, Madhya Pradesh\n` +
       `• **Journey:** Problem → Idea → Build → Innovation → HACKSAGON → Finalist\n` +
       `• **Key Innovation:** Offline-first crop disease detection with on-device TensorFlow Lite, drone AI, and Hindi voice interaction for rural farmers with limited connectivity.\n` +
-      `• **Tech Stack:** Python, React Native, Node.js, PostgreSQL, FastAPI, ONNX Runtime, TensorFlow Lite, SQLite.\n` +
-      `• [View Achievement Proof](https://drive.google.com/drive/folders/1sMEuZNtviFBPdnA_s0QG9ywP3IYnZPUh)`;
+      `• **GitHub:** [NeoAgri Repository](https://github.com/Arshan18/NeoAgri.git)\n` +
+      `• [View Certificate](https://drive.google.com/file/d/1h8bpL6baSkEZrc2A6K5ibd9b1l0cBQXp/view?usp=sharing)`;
   }
 
   // 7. Skills & Tech Stack Queries
