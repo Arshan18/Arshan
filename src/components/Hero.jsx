@@ -14,11 +14,11 @@ const Hero = () => {
         {/* User Profile Avatar */}
         <div className="flex flex-col items-center">
           <div className="relative inline-block group">
-            <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 blur-md opacity-70 group-hover:opacity-100 transition duration-500" />
+            <div className="absolute -inset-1.5 rounded-full bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 blur-lg opacity-75 group-hover:opacity-100 transition duration-500" />
             <img
               src={personalInfo.avatarUrl}
               alt={personalInfo.name}
-              className="relative w-28 h-28 sm:w-40 sm:h-40 rounded-full object-cover border-4 border-white shadow-xl mx-auto"
+              className="relative w-36 h-36 sm:w-52 sm:h-52 md:w-56 md:h-56 rounded-full object-cover border-4 sm:border-[5px] border-white shadow-2xl mx-auto transition-transform duration-300 group-hover:scale-105"
             />
           </div>
         </div>

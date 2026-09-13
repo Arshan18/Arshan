@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trophy, Award, ExternalLink, Github, BarChart3, TrendingUp, Sparkles, Database, FileSpreadsheet, Compass } from 'lucide-react';
 
 const Achievements = () => {
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [hoveredStep, setHoveredStep] = useState(null);
+  const [mousePos, setMousePos] = useState({});
+
+  const handleMouseMove = (e, id) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos((prev) => ({ ...prev, [id]: { x, y } }));
+  };
+
   // Achievement 01: NeoAgri - HACKSAGON 2026 Finalist
   const neoagriCertificateUrl = "https://drive.google.com/file/d/1h8bpL6baSkEZrc2A6K5ibd9b1l0cBQXp/view?usp=sharing";
   const neoagriGithubUrl = "https://github.com/Arshan18/NeoAgri.git";
@@ -54,7 +65,10 @@ const Achievements = () => {
       {/* Subtle Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] sm:w-[600px] h-[300px] bg-gradient-to-tr from-amber-200/30 via-blue-200/20 to-cyan-200/30 blur-3xl rounded-full pointer-events-none" />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8">
+      <div
+        className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8"
+        onMouseLeave={() => setHoveredCard(null)}
+      >
 
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -71,211 +85,295 @@ const Achievements = () => {
         </div>
 
         {/* ==================== ACHIEVEMENT 01: HACKSAGON 2026 FINALIST (NeoAgri) ==================== */}
-        <div className="rounded-3xl bg-slate-900 text-white p-6 sm:p-8 border border-slate-800 shadow-xl space-y-5 text-left relative overflow-hidden">
-          
-          {/* Top Banner Row */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
-            <div className="flex items-start sm:items-center gap-3.5">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 flex-shrink-0">
-                <Trophy className="w-6 h-6 sm:w-7 sm:h-7" />
-              </div>
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
-                    NATIONAL FINALIST
-                  </span>
-                  <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-blue-500/20 text-cyan-300 border border-blue-500/30">
-                    Gwalior, M.P.
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-1">
-                  HACKSAGON 2026 — FINALIST
-                </h3>
-                <div className="text-xs sm:text-sm text-cyan-300 font-medium mt-0.5 flex items-center gap-1.5">
-                  <span>🌾</span>
-                  <span>NeoAgri — Drone + Edge AI Agriculture Intelligence System</span>
-                </div>
-              </div>
-            </div>
+        {(() => {
+          const isHovered = hoveredCard === 'neoagri';
+          const isDimmed = hoveredCard !== null && hoveredCard !== 'neoagri';
+          const currentMouse = mousePos['neoagri'] || { x: 50, y: 50 };
 
-            {/* Action Buttons: Certificate & GitHub */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-1 md:pt-0 flex-shrink-0">
-              <a
-                href={neoagriCertificateUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs transition-all shadow-md hover:-translate-y-0.5"
-              >
-                <Award className="w-4 h-4" />
-                <span>View Certificate</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
+          return (
+            <div
+              onMouseEnter={() => setHoveredCard('neoagri')}
+              onMouseMove={(e) => handleMouseMove(e, 'neoagri')}
+              className={`rounded-3xl bg-slate-900 text-white p-6 sm:p-8 border transition-all duration-300 space-y-5 text-left relative overflow-hidden ${
+                isHovered
+                  ? 'border-amber-500/80 shadow-2xl shadow-amber-500/10 scale-[1.015] -translate-y-1.5 ring-2 ring-amber-500/20 z-20 opacity-100'
+                  : isDimmed
+                  ? 'border-slate-800 opacity-60 scale-[0.99] shadow-none'
+                  : 'border-slate-800 shadow-xl opacity-100 scale-100'
+              }`}
+            >
+              {/* Dynamic Cursor Spotlight */}
+              <div
+                className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
+                  isHovered ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{
+                  background: `radial-gradient(450px circle at ${currentMouse.x}% ${currentMouse.y}%, rgba(245, 158, 11, 0.12), transparent 80%)`,
+                }}
+              />
 
-              <a
-                href={neoagriGithubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition-all hover:-translate-y-0.5"
-              >
-                <Github className="w-4 h-4" />
-                <span>GitHub Repo</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
-          </div>
-
-          {/* Compact Stepper / Journey Timeline */}
-          <div className="space-y-2.5">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-              The Journey (Problem → Finalist)
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-              {neoagriJourney.map((step, idx) => (
-                <div
-                  key={idx}
-                  className={`p-3 rounded-xl border text-left transition-all ${
-                    step.highlight
-                      ? 'bg-amber-500/10 border-amber-500/40 text-amber-100 shadow-xs'
-                      : 'bg-slate-800/70 border-slate-700/80 text-slate-300'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-[10px] font-mono font-extrabold px-1.5 py-0.5 rounded ${
-                      step.highlight ? 'bg-amber-400 text-slate-950' : 'bg-slate-700 text-cyan-300'
-                    }`}>
-                      {step.num}
-                    </span>
-                    <span className={`text-xs font-bold ${step.highlight ? 'text-amber-300' : 'text-white'}`}>
-                      {step.label}
-                    </span>
+              {/* Top Banner Row */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5 relative z-10">
+                <div className="flex items-start sm:items-center gap-3.5">
+                  <div className="p-3 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 shadow-md shadow-amber-500/20 flex-shrink-0">
+                    <Trophy className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
-                  <p className="text-xs text-slate-300 leading-snug">
-                    {step.text}
-                  </p>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-amber-400/20 text-amber-300 border border-amber-400/30">
+                        NATIONAL FINALIST
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-blue-500/20 text-cyan-300 border border-blue-500/30">
+                        Gwalior, M.P.
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-1">
+                      HACKSAGON 2026 — FINALIST
+                    </h3>
+                    <div className="text-xs sm:text-sm text-cyan-300 font-medium mt-0.5 flex items-center gap-1.5">
+                      <span>🌾</span>
+                      <span>NeoAgri — Drone + Edge AI Agriculture Intelligence System</span>
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Tech Badges & Supporting Footer */}
-          <div className="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] font-mono font-semibold text-slate-500 mr-1">Stack:</span>
-              {neoagriTech.map((tech, idx) => (
-                <span
-                  key={idx}
-                  className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700"
+                {/* Action Buttons: Certificate & GitHub */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-1 md:pt-0 flex-shrink-0">
+                  <a
+                    href={neoagriCertificateUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-xs transition-all shadow-md hover:-translate-y-0.5"
+                  >
+                    <Award className="w-4 h-4" />
+                    <span>View Certificate</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+
+                  <a
+                    href={neoagriGithubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 transition-all hover:-translate-y-0.5"
+                  >
+                    <Github className="w-4 h-4" />
+                    <span>GitHub Repo</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Compact Stepper / Journey Timeline */}
+              <div className="space-y-2.5 relative z-10">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  The Journey (Problem → Finalist)
+                </div>
+
+                <div
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5"
+                  onMouseLeave={() => setHoveredStep(null)}
                 >
-                  {tech}
-                </span>
-              ))}
+                  {neoagriJourney.map((step, idx) => {
+                    const stepKey = `neo-${idx}`;
+                    const isStepHovered = hoveredStep === stepKey;
+                    const isAnyStepHovered = hoveredStep !== null && hoveredStep.startsWith('neo-');
+                    const isStepDimmed = isAnyStepHovered && !isStepHovered;
+
+                    return (
+                      <div
+                        key={idx}
+                        onMouseEnter={() => setHoveredStep(stepKey)}
+                        className={`p-3 rounded-xl border text-left transition-all duration-200 ${
+                          isStepHovered
+                            ? 'bg-amber-500/20 border-amber-400 text-white scale-[1.03] shadow-md z-10'
+                            : isStepDimmed
+                            ? 'opacity-50 scale-[0.98]'
+                            : step.highlight
+                            ? 'bg-amber-500/10 border-amber-500/40 text-amber-100 shadow-xs'
+                            : 'bg-slate-800/70 border-slate-700/80 text-slate-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`text-[10px] font-mono font-extrabold px-1.5 py-0.5 rounded ${
+                            step.highlight || isStepHovered ? 'bg-amber-400 text-slate-950' : 'bg-slate-700 text-cyan-300'
+                          }`}>
+                            {step.num}
+                          </span>
+                          <span className={`text-xs font-bold ${step.highlight || isStepHovered ? 'text-amber-300' : 'text-white'}`}>
+                            {step.label}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-300 leading-snug">
+                          {step.text}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Tech Badges & Supporting Footer */}
+              <div className="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 relative z-10">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[11px] font-mono font-semibold text-slate-500 mr-1">Stack:</span>
+                  {neoagriTech.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700 hover:border-amber-400 hover:text-amber-300 transition-colors"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="italic text-slate-400 text-[11px] sm:text-right">
+                  "From an idea for smarter farming to a HACKSAGON 2026 finalist."
+                </p>
+              </div>
+
             </div>
-
-            <p className="italic text-slate-400 text-[11px] sm:text-right">
-              "From an idea for smarter farming to a HACKSAGON 2026 finalist."
-            </p>
-          </div>
-
-        </div>
+          );
+        })()}
 
         {/* ==================== ACHIEVEMENT 02: UIDAI DATA ANALYTICS HACKATHON 2026 ==================== */}
-        <div className="rounded-3xl bg-slate-900 text-white p-6 sm:p-8 border border-slate-800 shadow-xl space-y-5 text-left relative overflow-hidden">
-          
-          {/* Top Banner Row */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5">
-            <div className="flex items-start sm:items-center gap-3.5">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/20 flex-shrink-0">
-                <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7" />
-              </div>
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-blue-500/20 text-cyan-300 border border-blue-500/30">
-                    DATA ANALYTICS HACKATHON
-                  </span>
-                  <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
-                    UIDAI Operational Insights
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-1">
-                  UIDAI Data Analytics Hackathon 2026
-                </h3>
-                <div className="text-xs sm:text-sm text-cyan-300 font-medium mt-0.5 flex items-center gap-1.5">
-                  <span>📈</span>
-                  <span>Unlocking Aadhaar Societal Trends</span>
-                </div>
-              </div>
-            </div>
+        {(() => {
+          const isHovered = hoveredCard === 'uidai';
+          const isDimmed = hoveredCard !== null && hoveredCard !== 'uidai';
+          const currentMouse = mousePos['uidai'] || { x: 50, y: 50 };
 
-            {/* GitHub Action Button */}
-            <div className="flex flex-wrap items-center gap-2.5 pt-1 md:pt-0 flex-shrink-0">
-              <a
-                href={uidaiGithubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-blue-600/30 hover:-translate-y-0.5"
-              >
-                <Github className="w-4 h-4" />
-                <span>View Project on GitHub</span>
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </div>
-          </div>
+          return (
+            <div
+              onMouseEnter={() => setHoveredCard('uidai')}
+              onMouseMove={(e) => handleMouseMove(e, 'uidai')}
+              className={`rounded-3xl bg-slate-900 text-white p-6 sm:p-8 border transition-all duration-300 space-y-5 text-left relative overflow-hidden ${
+                isHovered
+                  ? 'border-blue-500/80 shadow-2xl shadow-blue-500/10 scale-[1.015] -translate-y-1.5 ring-2 ring-blue-500/20 z-20 opacity-100'
+                  : isDimmed
+                  ? 'border-slate-800 opacity-60 scale-[0.99] shadow-none'
+                  : 'border-slate-800 shadow-xl opacity-100 scale-100'
+              }`}
+            >
+              {/* Dynamic Cursor Spotlight */}
+              <div
+                className={`absolute inset-0 pointer-events-none transition-opacity duration-300 ${
+                  isHovered ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{
+                  background: `radial-gradient(450px circle at ${currentMouse.x}% ${currentMouse.y}%, rgba(59, 130, 246, 0.12), transparent 80%)`,
+                }}
+              />
 
-          {/* Compact Stepper / Journey Timeline */}
-          <div className="space-y-2.5">
-            <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-              The Journey (Challenge → Solution)
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-              {uidaiJourney.map((step, idx) => (
-                <div
-                  key={idx}
-                  className={`p-3 rounded-xl border text-left transition-all ${
-                    step.highlight
-                      ? 'bg-blue-500/10 border-blue-500/40 text-cyan-100 shadow-xs'
-                      : 'bg-slate-800/70 border-slate-700/80 text-slate-300'
-                  }`}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className={`text-[10px] font-mono font-extrabold px-1.5 py-0.5 rounded ${
-                      step.highlight ? 'bg-blue-500 text-white' : 'bg-slate-700 text-cyan-300'
-                    }`}>
-                      {step.num}
-                    </span>
-                    <span className={`text-xs font-bold ${step.highlight ? 'text-cyan-300' : 'text-white'}`}>
-                      {step.label}
-                    </span>
+              {/* Top Banner Row */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-5 relative z-10">
+                <div className="flex items-start sm:items-center gap-3.5">
+                  <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-md shadow-blue-500/20 flex-shrink-0">
+                    <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7" />
                   </div>
-                  <p className="text-xs text-slate-300 leading-snug">
-                    {step.text}
-                  </p>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-blue-500/20 text-cyan-300 border border-blue-500/30">
+                        DATA ANALYTICS HACKATHON
+                      </span>
+                      <span className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-mono font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                        UIDAI Operational Insights
+                      </span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-1">
+                      UIDAI Data Analytics Hackathon 2026
+                    </h3>
+                    <div className="text-xs sm:text-sm text-cyan-300 font-medium mt-0.5 flex items-center gap-1.5">
+                      <span>📈</span>
+                      <span>Unlocking Aadhaar Societal Trends</span>
+                    </div>
+                  </div>
                 </div>
-              ))}
-            </div>
-          </div>
 
-          {/* Tech Badges & Supporting Footer */}
-          <div className="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400">
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[11px] font-mono font-semibold text-slate-500 mr-1">Stack:</span>
-              {uidaiTech.map((tech, idx) => (
-                <span
-                  key={idx}
-                  className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700"
+                {/* GitHub Action Button */}
+                <div className="flex flex-wrap items-center gap-2.5 pt-1 md:pt-0 flex-shrink-0">
+                  <a
+                    href={uidaiGithubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs transition-all shadow-md shadow-blue-600/30 hover:-translate-y-0.5"
+                  >
+                    <Github className="w-4 h-4" />
+                    <span>View Project on GitHub</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Compact Stepper / Journey Timeline */}
+              <div className="space-y-2.5 relative z-10">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                  The Journey (Challenge → Solution)
+                </div>
+
+                <div
+                  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5"
+                  onMouseLeave={() => setHoveredStep(null)}
                 >
-                  {tech}
-                </span>
-              ))}
+                  {uidaiJourney.map((step, idx) => {
+                    const stepKey = `uidai-${idx}`;
+                    const isStepHovered = hoveredStep === stepKey;
+                    const isAnyStepHovered = hoveredStep !== null && hoveredStep.startsWith('uidai-');
+                    const isStepDimmed = isAnyStepHovered && !isStepHovered;
+
+                    return (
+                      <div
+                        key={idx}
+                        onMouseEnter={() => setHoveredStep(stepKey)}
+                        className={`p-3 rounded-xl border text-left transition-all duration-200 ${
+                          isStepHovered
+                            ? 'bg-blue-500/20 border-cyan-400 text-white scale-[1.03] shadow-md z-10'
+                            : isStepDimmed
+                            ? 'opacity-50 scale-[0.98]'
+                            : step.highlight
+                            ? 'bg-blue-500/10 border-blue-500/40 text-cyan-100 shadow-xs'
+                            : 'bg-slate-800/70 border-slate-700/80 text-slate-300'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className={`text-[10px] font-mono font-extrabold px-1.5 py-0.5 rounded ${
+                            step.highlight || isStepHovered ? 'bg-blue-500 text-white' : 'bg-slate-700 text-cyan-300'
+                          }`}>
+                            {step.num}
+                          </span>
+                          <span className={`text-xs font-bold ${step.highlight || isStepHovered ? 'text-cyan-300' : 'text-white'}`}>
+                            {step.label}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-300 leading-snug">
+                          {step.text}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Tech Badges & Supporting Footer */}
+              <div className="pt-3 border-t border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-400 relative z-10">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <span className="text-[11px] font-mono font-semibold text-slate-500 mr-1">Stack:</span>
+                  {uidaiTech.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-800 text-slate-300 border border-slate-700 hover:border-blue-400 hover:text-cyan-300 transition-colors"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="italic text-slate-400 text-[11px] sm:text-right">
+                  "Transformed real-world government datasets into an interactive analytical solution."
+                </p>
+              </div>
+
             </div>
-
-            <p className="italic text-slate-400 text-[11px] sm:text-right">
-              "Transformed real-world government datasets into an interactive analytical solution."
-            </p>
-          </div>
-
-        </div>
+          );
+        })()}
 
       </div>
     </section>
@@ -283,3 +381,4 @@ const Achievements = () => {
 };
 
 export default Achievements;
+

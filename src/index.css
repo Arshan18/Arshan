@@ -12,7 +12,8 @@
     font-family: 'Times New Roman', Times, Georgia, serif;
   }
 
-  code, pre {
+  code,
+  pre {
     font-family: 'JetBrains Mono', monospace;
   }
 }
